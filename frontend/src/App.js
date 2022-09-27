@@ -1,12 +1,14 @@
-import logo from './logo.svg'
-import './App.css'
-import { Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
+import Register from './pages/Register'
+import { AuthProvider } from './services/AuthProvider'
 
 function App() {
   return (
-    <Routes>
-
-    </Routes>
+		<AuthProvider>
+			<Routes>
+				<Route path='/' element={<Register />} />
+			</Routes>
+		</AuthProvider>
   )
 }
 
