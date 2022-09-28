@@ -1,6 +1,8 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import apiClient from '../services/api'
 import { useAuth } from '../services/AuthProvider'
+import useDatetime from '../hooks/useDatetime'
+import moment from 'moment'
 
 const CreateTask = () => {
     const { loggedInUser } = useAuth()
@@ -10,30 +12,7 @@ const CreateTask = () => {
         description: '',
         schedule: ''
     })
-
-    const getTimezone = useMemo(() => {
-        const offset = new Date().getTimezoneOffset()
-        const difference = (offset / 60 * -1).toString()
-        const differenceArray = difference.split('.')
-        var returnUtcTimezone = ''
-
-        if (difference.length === 1) {
-            if (!differenceArray[0].includes('-')) {
-                returnUtcTimezone += '+'
-            }
-
-            returnUtcTimezone += differenceArray[0].padStart(2, 0) + ':00'
-        }
-        else {
-            if (!differenceArray[0].includes('-')) {
-                returnUtcTimezone += '+'
-            }
-
-            returnUtcTimezone += differenceArray[0].padStart(2, 0) + ':30'
-        }
-
-        setTimezone(returnUtcTimezone)
-    }, [])
+    const getTimezone = useDatetime(setTimezone)
 
     const handleOnChange = (e) => {
         if (e.target.id === 'schedule') {
@@ -97,7 +76,13 @@ const CreateTask = () => {
                     <input
                         type='datetime-local'
                         id='schedule'
-                        onChange={handleOnChange} />
+                        onChange={handleOnChange}
+                        value={
+                            moment(
+                                task.schedule.replace(/.000/g, '').substring(0, (task.schedule.replace(/.000/g, '')).lastIndexOf(':00')))
+                                .format('YYYY-MM-DDTHH:mm')
+                            
+                        } />
                 </div>
                 <input type='submit' value='Save' />
             </form>
