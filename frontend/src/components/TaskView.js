@@ -25,8 +25,8 @@ const TaskView = ({ userId }) => {
                     schedule = schedule.substring(0, schedule.lastIndexOf(':00'))
 
                     return (
-                        <>
-                            <div key={index}>
+                        <React.Fragment key={index}>
+                            <div>
                                 Title: {task.name}
                                 <br />
                                 Description: {task.description}
@@ -36,7 +36,7 @@ const TaskView = ({ userId }) => {
                                 Time: {('0' + moment(schedule).format('LT')).slice(-8)}
                             </div>
                             <br />
-                        </>
+                        </React.Fragment>
                     )
                 })
             }
