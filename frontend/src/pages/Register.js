@@ -63,7 +63,8 @@ const Register = () => {
             login()
             navigate('/dashboard')
         }).catch((error) => {
-            window.alert('There was an error processing your request!')
+            console.log(error)
+            // window.alert('There was an error processing your request!')
         })
     }
 

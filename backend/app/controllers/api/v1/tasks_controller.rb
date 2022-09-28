@@ -1,6 +1,11 @@
 class Api::V1::TasksController < ApplicationController
   skip_before_action :verify_authenticity_token
 
+  def show
+    @task = Task.where(user_id: params[:id]).order(:schedule)
+    render json: @task
+  end
+
   def create
     if task_params[:schedule].to_datetime > Time.now
       @task = Task.create(task_params)

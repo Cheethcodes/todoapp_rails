@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import TaskView from '../components/TaskView'
 import { useAuth } from '../services/AuthProvider'
 
 const Dashboard = () => {
@@ -6,7 +7,9 @@ const Dashboard = () => {
 
     return (
         <div>
-            Welcome, {loggedInUser.username + ' id: ' + loggedInUser.id}
+            Welcome, {loggedInUser.username}
+            <hr/>
+            <TaskView userId={loggedInUser.id} />
         </div>
     )
 }
