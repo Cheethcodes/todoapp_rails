@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react'
 import apiClient from '../services/api'
 import moment from 'moment'
 
-const TaskView = ({ userId }) => {
+const TaskView = ({ userId, editState, setEditId, setShowModal }) => {
     const [tasks, setTasks] = useState([])
 
     const data = useMemo(() => {
@@ -14,7 +14,7 @@ const TaskView = ({ userId }) => {
         }).catch(error => {
             console.log(error)
         })
-    }, [])
+    }, [editState])
 
     return (
         <div>
@@ -27,7 +27,17 @@ const TaskView = ({ userId }) => {
                     return (
                         <React.Fragment key={index}>
                             <div>
-                                Title: {task.name}
+                                <div>
+                                    <div>
+                                        Title: {task.name}
+                                    </div>
+                                    <button type='button' onClick={() => {
+                                        setEditId(task.id)
+                                        setShowModal(true)
+                                    }}>
+                                        EDIT
+                                    </button>
+                                </div>
                                 <br />
                                 Description: {task.description}
                                 <br />
