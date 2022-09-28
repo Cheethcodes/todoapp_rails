@@ -5,7 +5,7 @@ import { useAuth } from '../services/AuthProvider'
 import Cookies from 'js-cookie'
 
 const Login = () => {
-    const { login, setUser } = useAuth()
+    const { login, loggedInUser, setLoggedInUser } = useAuth()
     const navigate = useNavigate()
 
     const [credentials, setCredentials] = useState({
@@ -34,6 +34,12 @@ const Login = () => {
                 }
             }
         }).then((response) => {
+            setLoggedInUser({
+                ...loggedInUser,
+                id: response.data.id,
+                username: response.data.username
+            })
+
             Cookies.set('user_id', response.data.id)
             Cookies.set('user_username', response.data.username)
             login()

@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuth } from '../services/AuthProvider'
 
 const Dashboard = () => {
-    const { user } = useAuth()
+    const { loggedInUser } = useAuth()
 
     return (
-        <div>Welcome, {user.username}</div>
+        <div>
+            Welcome, {loggedInUser.username + ' id: ' + loggedInUser.id}
+        </div>
     )
 }
 
