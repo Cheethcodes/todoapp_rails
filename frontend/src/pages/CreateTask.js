@@ -3,7 +3,7 @@ import apiClient from '../services/api'
 import { useAuth } from '../services/AuthProvider'
 
 const CreateTask = () => {
-    const { user } = useAuth()
+    const { loggedInUser } = useAuth()
     const [timezone, setTimezone] = useState('')
     const [task, setTask] = useState({
         name: '',
@@ -62,7 +62,7 @@ const CreateTask = () => {
                         name: task.name,
                         description: task.description,
                         schedule: task.schedule + ':00.000',
-                        user_id: user.id
+                        user_id: loggedInUser.id
                     }
                 }
             }).then(response => {

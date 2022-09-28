@@ -12,8 +12,8 @@ export const AuthProvider = ({ children }) => {
         username: Cookies.get('user_username') || null,
     })
 
-    const login = () => {
-        const data = setLoggedIn({
+    const login = async () => {
+        const data = await setLoggedIn({
             type: "login",
         })
     }
