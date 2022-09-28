@@ -1,20 +1,23 @@
-import React, { useMemo, useState } from 'react'
+import React from 'react'
 import apiClient from '../services/api'
 import moment from 'moment'
 
-const TaskView = ({ userId, editState, setEditId, setShowModal }) => {
-    const [tasks, setTasks] = useState([])
+const TaskView = ({ tasks, setEditState, setEditId, setShowModal }) => {
+    const handleDeleteTask = (id) => {
+        if (!window.confirm('Are you sure you want to delete the task?')) {
+            return
+        }
 
-    const data = useMemo(() => {
         apiClient({
-            method: 'get',
-            url: `/api/v1/tasks/${userId}`
+            method: 'delete',
+            url: `/api/v1/tasks/${id}`
         }).then(response => {
-            setTasks(response.data)
+            window.alert('Successfully deleted task!')
+            setEditState(true)
         }).catch(error => {
             console.log(error)
         })
-    }, [editState])
+    }
 
     return (
         <div>
@@ -31,12 +34,17 @@ const TaskView = ({ userId, editState, setEditId, setShowModal }) => {
                                     <div>
                                         Title: {task.name}
                                     </div>
-                                    <button type='button' onClick={() => {
-                                        setEditId(task.id)
-                                        setShowModal(true)
-                                    }}>
-                                        EDIT
-                                    </button>
+                                    <div>
+                                        <button type='button' onClick={() => {
+                                            setEditId(task.id)
+                                            setShowModal(true)
+                                        }}>
+                                            EDIT
+                                        </button>
+                                        <button type='button' onClick={() => handleDeleteTask(task.id)}>
+                                            DELETE
+                                        </button>
+                                    </div>
                                 </div>
                                 <br />
                                 Description: {task.description}
