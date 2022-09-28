@@ -1,5 +1,5 @@
 import moment from 'moment'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import useDatetime from '../hooks/useDatetime'
 import apiClient from '../services/api'
 
@@ -74,14 +74,6 @@ const TaskModal = ({ showModal, setShowModal, editId, setEditState }) => {
             console.log(error.response)
         })
     }
-
-    useEffect(() => {
-        console.log(
-            moment(
-                task.schedule.replace(/.000/g, '').substring(0, (task.schedule.replace(/.000/g, '')).lastIndexOf(':00')))
-                .format('YYYY-MM-DDTLTS')
-        )
-    }, [task])
 
     return (
         <div style={{ display: `${showModal ? 'block' : 'none'}`, background: '#9797978a', width: '100vw', height: '100vh', position: 'absolute', top: '0', left: '0', zIndex: '10', backdropFilter: 'blur(3px)' }}>

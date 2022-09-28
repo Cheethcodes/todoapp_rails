@@ -50,6 +50,10 @@ class Api::V1::TasksController < ApplicationController
     end
   end
 
+  def destroy
+    Task.delete(params[:id])
+  end
+
   private
 
   def task_params
