@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import apiClient from '../services/api'
 import { useAuth } from '../services/AuthProvider'
+import Cookies from 'js-cookie'
 
 const Register = () => {
-    const { login } = useAuth()
+    const { login, loggedInUser, setLoggedInUser } = useAuth()
     const navigate = useNavigate()
 
     const [user, setUser] = useState({
@@ -39,6 +40,15 @@ const Register = () => {
                 }
             }
         }).then((response) => {
+            setLoggedInUser({
+                ...loggedInUser,
+                id: response.data.id,
+                username: response.data.username
+            })
+
+            Cookies.set('user_id', response.data.id)
+            Cookies.set('user_username', response.data.username)
+
             setUser({
                 ...user,
                 name: '',

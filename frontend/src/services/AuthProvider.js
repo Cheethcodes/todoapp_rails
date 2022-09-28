@@ -7,27 +7,27 @@ const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
     const [loggedIn, setLoggedIn] = useCustomReducer(SessionReducer, sessionStorage.getItem('loggedIn') === 'true' || false)
-    const [user, setUser] = useState({
+    const [loggedInUser, setLoggedInUser] = useState({
         id: Cookies.get('user_id') || null,
         username: Cookies.get('user_username') || null,
     })
 
-    const login = async () => {
-        const data = await setLoggedIn({
-          type: "login",
+    const login = () => {
+        const data = setLoggedIn({
+            type: "login",
         })
     }
-  
+
     const value = useMemo(() => ({
         login,
         loggedIn,
-        user,
-        setUser
+        loggedInUser,
+        setLoggedInUser
     }), [loggedIn])
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
-  
+
 export const useAuth = () => {
     return useContext(AuthContext)
 }

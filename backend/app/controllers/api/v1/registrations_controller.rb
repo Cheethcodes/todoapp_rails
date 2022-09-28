@@ -44,7 +44,7 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
 
   def respond_with(resource, _opts = {})
     if resource.persisted?
-      render json: "Succesfully signed in!"
+      render json: resource
     else
       render json: resource.errors.full_messages.to_sentence
     end
