@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import apiClient from '../services/api'
 import { useAuth } from '../services/AuthProvider'
 import Cookies from 'js-cookie'
+import { FaEnvelope, FaIdCard, FaLock, FaPhoneAlt, FaUserAlt } from 'react-icons/fa'
 
 const Register = () => {
     const { login, loggedInUser, setLoggedInUser } = useAuth()
@@ -63,8 +64,7 @@ const Register = () => {
             login()
             navigate('/dashboard')
         }).catch((error) => {
-            console.log(error)
-            // window.alert('There was an error processing your request!')
+            window.alert('There was an error processing your request!')
         })
     }
 
@@ -76,86 +76,119 @@ const Register = () => {
     }
 
     return (
-        <div className='register-card w-3/5 mx-auto'>
-            <div className='mb-5'>
-                <h4 className='title text-center'>REGISTER</h4>
-            </div>
-            <hr className='mb-5' />
-            <div>
-                {/* Form */}
-                <form onSubmit={saveUser} encType='multipart/form-data'>
-                    <div className='grid grid-cols-4 gap-5'>
-                        <div className='col-span-3'>
-                            {/* Name */}
-                            <div className='form-group mb-8'>
-                                <label>Name</label>
-                                <input
-                                    type='text'
-                                    id='name'
-                                    onChange={handleOnChange}
-                                    value={user.name}
-                                    required={true} />
+        <div className='auth-screen'>
+            <div className='auth-card rounded w-full mx-auto px-10 py-10 bg-white' style={{ maxWidth: '500px' }}>
+                <div className='flex justify-between mb-8'>
+                    <h4 className='text-lg font-bold text-primary text-left'>To Do App | <span className='font-bold' style={{ fontSize: '14px' }}>Register</span></h4>
+                    <a
+                        href='/'
+                        className='hover:border-primary text-slate-200 hover:text-primary border border-slate-200'
+                        style={{ padding: '6px 15px' }}>
+                        Login
+                    </a>
+                </div>
+                <div>
+                    {/* Form */}
+                    <form onSubmit={saveUser} encType='multipart/form-data'>
+                        {/* Name */}
+                        <div className='flex mb-8'>
+                            <div className='bg-primary text-white py-2 px-3 flex flex-col justify-center'>
+                                <FaIdCard style={{ height: '12px' }} />
                             </div>
-                            {/* Email Address */}
-                            <div className='form-group mb-8'>
-                                <label>User Email</label>
-                                <input
-                                    type='email'
-                                    id='email'
-                                    onChange={handleOnChange}
-                                    value={user.email}
-                                    required={true} />
-                            </div>
-                            {/* Phone */}
-                            <div className='form-group mb-8'>
-                                <label>Contact No</label>
-                                <input
-                                    type='text'
-                                    id='phone'
-                                    onChange={handleOnChange}
-                                    value={user.phone} />
-                            </div>
-                            {/* Username */}
-                            <div className='form-group mb-8'>
-                                <label>Username</label>
-                                <input
-                                    type='text'
-                                    id='username'
-                                    onChange={handleOnChange}
-                                    value={user.username}
-                                    required={true} />
-                            </div>
-                            {/* Password */}
-                            <div className='form-group mb-8'>
-                                <label>Password</label>
-                                <input
-                                    type='password'
-                                    id='password'
-                                    onChange={handleOnChange}
-                                    value={user.password}
-                                    required={true} />
-                            </div>
-                            {/* Password */}
-                            <div className='form-group mb-8'>
-                                <label>Confirm Password</label>
-                                <input
-                                    type='password'
-                                    id='confirm_password'
-                                    onChange={handleOnChange}
-                                    value={user.confirm_password}
-                                    required={true} />
-                            </div>
-                            <div className='form-group text-right mt-4'>
-                                <button
-                                    type='submit'
-                                    classes='bg-blue-500 hover:bg-blue-700'
-                                    style={{ width: '200px', minWidth: '200px' }}>
-                                    REGISTER
-                                </button>
-                            </div>
+                            <input
+                                type='text'
+                                id='name'
+                                placeholder='Name'
+                                className='w-full py-2 px-5 outline-0 border-t border-b border-r border-l-0 border-slate-200'
+                                onChange={handleOnChange}
+                                value={user.name}
+                                required={true}
+                                autoComplete='off' />
                         </div>
-                    </div>
-                </form>
+                        {/* Email Address */}
+                        <div className='flex mb-8'>
+                            <div className='bg-primary text-white py-2 px-3 flex flex-col justify-center'>
+                                <FaEnvelope style={{ height: '12px' }} />
+                            </div>
+                            <input
+                                type='email'
+                                id='email'
+                                placeholder='Email'
+                                className='w-full py-2 px-5 outline-0 border-t border-b border-r border-l-0 border-slate-200'
+                                onChange={handleOnChange}
+                                value={user.email}
+                                required={true}
+                                autoComplete='off' />
+                        </div>
+                        {/* Phone */}
+                        <div className='flex mb-8'>
+                            <div className='bg-primary text-white py-2 px-3 flex flex-col justify-center'>
+                                <FaPhoneAlt style={{ height: '12px' }} />
+                            </div>
+                            <input
+                                type='text'
+                                id='phone'
+                                placeholder='Contact Number'
+                                className='w-full py-2 px-5 outline-0 border-t border-b border-r border-l-0 border-slate-200'
+                                onChange={handleOnChange}
+                                value={user.phone}
+                                autoComplete='off' />
+                        </div>
+                        {/* Username */}
+                        <div className='flex mb-8'>
+                            <div className='bg-primary text-white py-2 px-3 flex flex-col justify-center'>
+                                <FaUserAlt style={{ height: '12px' }} />
+                            </div>
+                            <input
+                                type='text'
+                                id='username'
+                                placeholder='Username'
+                                className='w-full py-2 px-5 outline-0 border-t border-b border-r border-l-0 border-slate-200'
+                                onChange={handleOnChange}
+                                value={user.username}
+                                required={true}
+                                autoComplete='off' />
+                        </div>
+                        {/* Password */}
+                        <div className='flex mb-8'>
+                            <div className='bg-primary text-white py-2 px-3 flex flex-col justify-center'>
+                                <FaLock style={{ height: '12px' }} />
+                            </div>
+                            <input
+                                type='password'
+                                id='password'
+                                placeholder='Password'
+                                className='w-full py-2 px-5 outline-0 border-t border-b border-r border-l-0 border-slate-200'
+                                onChange={handleOnChange}
+                                value={user.password}
+                                required={true}
+                                autoComplete='off' />
+                        </div>
+                        {/* Password */}
+                        <div className='flex mb-8'>
+                            <div className='bg-primary text-white py-2 px-3 flex flex-col justify-center'>
+                                <FaLock style={{ height: '12px' }} />
+                            </div>
+                            <input
+                                type='password'
+                                id='confirm_password'
+                                placeholder='Confirm Password'
+                                className='w-full py-2 px-5 outline-0 border-t border-b border-r border-l-0 border-slate-200'
+                                onChange={handleOnChange}
+                                value={user.confirm_password}
+                                required={true}
+                                autoComplete='off' />
+                        </div>
+                        <div className='form-group mt-4 text-center'>
+                            <button
+                                type='submit'
+                                className='bg-primary hover:bg-transparent text-white hover:text-primary border border-primary'
+                                style={{ width: '200px', minWidth: '200px', padding: '6px 15px' }}>
+                                REGISTER
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     )

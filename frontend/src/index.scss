@@ -1,1 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+$primary: rgba(34, 34, 165, 0.719);
+
+html,
+body {
+    background-color: whitesmoke;
+}
+
+p,
+a,
+label,
+button,
+table,
+span,
+ul,
+input,
+i {
+    font-size: 12px;
+}
+
+button,
+a {
+    border-radius: 3px;
+    transition: 0.1s all ease;
+}
+
+.auth-screen {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+
+    .auth-card {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.auth-card,
+.task-card {
+    box-shadow: 0 2px 5px #79797994;
+}
+
+.task-card {
+    transition: 0.2s all ease;
+
+    &:hover {
+        transform: scale(1.025);
+    }
+}

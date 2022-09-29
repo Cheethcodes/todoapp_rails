@@ -25,12 +25,18 @@ const Dashboard = () => {
     }, [editState])
 
     return (
-        <div>
-            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+        <div className='py-5 px-10'>
+            <div className='flex justify-between items-center'>
                 <h4>Welcome, {loggedInUser.username}</h4>
-                <button type='button' onClick={logout}>Logout</button>
+                <button
+                    type='button'
+                    className='bg-primary hover:bg-transparent text-white hover:text-primary border border-primary'
+                    style={{ padding: '6px 15px' }}
+                    onClick={logout}>
+                    LOGOUT
+                </button>
             </div>
-            <hr />
+            <hr className='my-2' />
             <TaskView tasks={tasks} editState={editState} setEditState={setEditState} setEditId={setEditId} setShowModal={setShowModal} />
             <TaskModal showModal={showModal} setShowModal={setShowModal} editId={editId} setEditState={setEditState} />
         </div>
