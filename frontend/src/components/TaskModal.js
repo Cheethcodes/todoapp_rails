@@ -1,5 +1,6 @@
 import moment from 'moment'
 import React, { useMemo, useState } from 'react'
+import { FaTimes } from 'react-icons/fa'
 import useDatetime from '../hooks/useDatetime'
 import apiClient from '../services/api'
 
@@ -41,7 +42,7 @@ const TaskModal = ({ showModal, setShowModal, editId, setEditState }) => {
         if (e.target.id === 'is_finished') {
             setTask({
                 ...task,
-                is_finished: e.target.checked ? 1 : 0
+                is_finished: e.target.checked
             })
 
             return
@@ -81,31 +82,37 @@ const TaskModal = ({ showModal, setShowModal, editId, setEditState }) => {
                 !editId || editId === '' || editId === null ?
                     <></>
                     :
-                    <div style={{ background: 'white', width: '50vw', height: '50vh', maxWidth: '600px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', padding: '20px 30px' }}>
-                        <button type='button' onClick={() => setShowModal(false)}>X</button>
-                        <hr/>
+                    <div className='bg-white absolute p-10 rounded' style={{ width: '50vw', maxWidth: '600px', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                        <div className='flex justify-end mb-4'>
+                            <button type='button' className='text-red-600' onClick={() => setShowModal(false)}>
+                                <FaTimes />
+                            </button>
+                        </div>
                         <form onSubmit={saveTask}>
-                            <div>
-                                <label>Title</label>
+                            <div className='mb-2'>
+                                <label className='font-bold'>Title</label>
                                 <input
                                     type='text'
                                     id='name'
+                                className='w-full py-2 px-5 outline-0 border border-slate-200'
                                     onChange={handleOnChange}
                                     value={task.name} />
                             </div>
-                            <div>
-                                <label>Description</label>
+                            <div className='mb-2'>
+                                <label className='font-bold'>Description</label>
                                 <input
                                     type='text'
                                     id='description'
+                                className='w-full py-2 px-5 outline-0 border border-slate-200'
                                     onChange={handleOnChange}
                                     value={task.description} />
                             </div>
-                            <div>
-                                <label>Schedule</label>
+                            <div className='mb-2'>
+                                <label className='font-bold'>Schedule</label>
                                 <input
                                     type='datetime-local'
                                     id='schedule'
+                                className='w-full py-2 px-5 outline-0 border border-slate-200'
                                     onChange={handleOnChange}
                                     value={
                                         moment(
@@ -114,15 +121,22 @@ const TaskModal = ({ showModal, setShowModal, editId, setEditState }) => {
 
                                     } />
                             </div>
-                            <div>
-                                <label>Finished</label>
+                            <div className='flex gap-2 mb-2'>
+                                <label className='font-bold'>Finished</label>
                                 <input
                                     type='checkbox'
                                     id='is_finished'
                                     onChange={handleOnChange}
-                                    checked={task.is_finished === 1 ? true : false} />
+                                    checked={task.is_finished ? true : false} />
                             </div>
-                            <input type='submit' value='Save' />
+                            <div className='form-group mt-4 text-right'>
+                                <button
+                                    type='submit'
+                                    className='bg-primary hover:bg-transparent text-white hover:text-primary border border-primary'
+                                    style={{ width: '200px', minWidth: '200px', padding: '6px 15px' }}>
+                                    Save
+                                </button>
+                            </div>
                         </form>
                     </div>
             }

@@ -1,6 +1,7 @@
 import React from 'react'
 import apiClient from '../services/api'
 import moment from 'moment'
+import { FaPenAlt, FaTrashAlt } from 'react-icons/fa'
 
 const TaskView = ({ tasks, setEditState, setEditId, setShowModal }) => {
     const handleDeleteTask = (id) => {
@@ -20,7 +21,7 @@ const TaskView = ({ tasks, setEditState, setEditId, setShowModal }) => {
     }
 
     return (
-        <div>
+        <div className='grid grid-cols-5 gap-2'>
             {
                 tasks &&
                 tasks.map((task, index) => {
@@ -29,29 +30,38 @@ const TaskView = ({ tasks, setEditState, setEditId, setShowModal }) => {
 
                     return (
                         <React.Fragment key={index}>
-                            <div>
-                                <div>
+                            <div className={`task-card flex flex-col p-5 rounded ${task.is_finished ? 'bg-green-100' : 'bg-red-100'}`}>
+                                <div className='flex justify-between items-start'>
                                     <div>
-                                        Title: {task.name}
+                                        <h4 className='font-medium'>{task.name}</h4>
+                                        <small className='font-light' style={{fontSize: '10px'}}>
+                                            {moment(schedule).format('LL')} | {('0' + moment(schedule).format('LT')).slice(-8)}
+                                        </small>
                                     </div>
-                                    <div>
-                                        <button type='button' onClick={() => {
-                                            setEditId(task.id)
-                                            setShowModal(true)
-                                        }}>
-                                            EDIT
+                                    <div className='flex gap-1'>
+                                        <button
+                                            type='button'
+                                            className='bg-primary hover:bg-transparent text-white hover:text-primary border border-primary'
+                                            style={{ padding: '5px' }}
+                                            onClick={() => {
+                                                setEditId(task.id)
+                                                setShowModal(true)
+                                            }}>
+                                            <FaPenAlt />
                                         </button>
-                                        <button type='button' onClick={() => handleDeleteTask(task.id)}>
-                                            DELETE
+                                        <button
+                                            type='button'
+                                            className='bg-red-600 hover:bg-transparent text-white hover:text-red-600 border border-red-600'
+                                            style={{ padding: '5px' }}
+                                            onClick={() => handleDeleteTask(task.id)}>
+                                            <FaTrashAlt />
                                         </button>
                                     </div>
                                 </div>
-                                <br />
-                                Description: {task.description}
-                                <br />
-                                Date: {moment(schedule).format('LL')}
-                                <br />
-                                Time: {('0' + moment(schedule).format('LT')).slice(-8)}
+                                <hr className='my-2' />
+                                <div className='mb-2'>
+                                    {task.description}
+                                </div>
                             </div>
                             <br />
                         </React.Fragment>
