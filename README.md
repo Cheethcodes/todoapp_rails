@@ -13,9 +13,9 @@
 `MySql2`
 `Ubuntu 20.04.5 LTS`
 
-### Cloning the repository
+### Cloning the repository (moved from old repository)
 ```sh 
-$ git clone https://github.com/gbrlhnz/todolist_ruby
+$ git clone https://github.com/Cheethcodes/todoapp_rails/
 $ git pull
 ```
 ### Initializing the project for development
