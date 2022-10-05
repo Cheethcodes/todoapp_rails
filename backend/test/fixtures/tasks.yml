@@ -4,8 +4,10 @@ one:
   name: MyString
   description: MyString
   schedule: MyString
+  is_finished: false
 
 two:
   name: MyString
   description: MyString
   schedule: MyString
+  is_finished: false

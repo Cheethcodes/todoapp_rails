@@ -10,13 +10,19 @@ export default function SessionReducer(state, action) {
         case 'logout':
             apiClient({
                 method: 'delete',
-                url: '/api/v1/logout'
+                url: '/auth/sign_out'
             }).then(response => {
                 sessionStorage.setItem('loggedIn', 'false')
                 Cookies.remove('user_id')
                 Cookies.remove('user_username')
+                Cookies.remove('user_email')
+                Cookies.set('token-type')
+                Cookies.set('access-token')
+                Cookies.set('client')
+                Cookies.set('uid')
+                Cookies.set('authorization')
             }).catch(error => {
-                console.log(error)
+                window.alert('There was an error processing your request!')
             })
 
             return false

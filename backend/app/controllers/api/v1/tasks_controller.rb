@@ -1,66 +1,41 @@
 class Api::V1::TasksController < ApplicationController
-  skip_before_action :verify_authenticity_token
+  before_action :authenticate_user!
 
   def show
-    @task = Task.where(user_id: params[:id]).order(:schedule)
-    render json: @task
+    task = Task.find(params[:id])
+    render json: task
   end
 
   def create
-    if task_params[:schedule].to_datetime > Time.now
-      @task = Task.create(task_params)
+    task = Task.new(task_params)
 
-      if @task
-        render json: {
-          status: {
-            code: 200,
-            message: "Succesfully added new task!"
-          }
-        }
-      else
-        render json: {
-          status: {
-            message: 'Unprocessable content!'
-          }
-        }
-      end
+    if task.save
+      render json: task
     else
       render json: {
-        status: {
-          message: 'Invalid date! (Date should not be less than ' + Time.now.to_s
-        }
+        message: task.errors,
+        status: :unprocessable_entity
       }
     end
-  end
-
-  def edit
-    @task = Task.find(params[:id])
-    render json: @task
   end
 
   def update
     if task_params[:schedule].to_datetime > Time.now
-      Task.update(params[:id], :name => task_update_params[:name], :description => task_update_params[:description], :schedule => task_update_params[:schedule], :is_finished => task_update_params[:is_finished])
+      Task.update(params[:id], :name => task_params[:name], :description => task_params[:description], :schedule => task_params[:schedule], :is_finished => task_params[:is_finished])
     else
       render json: {
-        status: {
-          message: 'Invalid date! (Date should not be less than ' + Time.now.to_s
-        }
+        status: :unprocessable_entity,
+        message: 'Invalid date! (Date should not be less than ' + Time.now.to_s
       }
     end
   end
-
+  
   def destroy
     Task.delete(params[:id])
   end
 
   private
-
-  def task_params
-    params.require(:task).permit(:name, :description, :schedule, :user_id)
-  end
-
-  def task_update_params
-    params.require(:task).permit(:name, :description, :schedule, :is_finished)
-  end
+    def task_params
+      params.require(:task).permit(:name, :description, :schedule, :is_finished, :user_id)
+    end
 end

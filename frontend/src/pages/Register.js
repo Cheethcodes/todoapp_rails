@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import apiClient from '../services/api'
 import { useAuth } from '../services/AuthProvider'
 import Cookies from 'js-cookie'
-import { FaEnvelope, FaIdCard, FaLock, FaPhoneAlt, FaUserAlt } from 'react-icons/fa'
+import { FaEnvelope, FaLock, FaPhoneAlt, FaUserAlt, FaIdCardAlt } from 'react-icons/fa'
 
 const Register = () => {
     const { login, loggedInUser, setLoggedInUser } = useAuth()
@@ -28,27 +28,33 @@ const Register = () => {
 
         apiClient({
             method: 'post',
-            url: '/api/v1/signup',
-            data:
-            {
-                user: {
-                    name: user.name,
-                    phone: user.phone,
-                    email: user.email,
-                    username: user.username,
-                    password: user.password,
-                    password_confirmation: user.confirm_password
-                }
+            url: '/auth/',
+            data: {
+                name: user.name,
+                phone: user.phone,
+                email: user.email,
+                username: user.username,
+                password: user.password,
+                password_confirmation: user.confirm_password
             }
         }).then((response) => {
             setLoggedInUser({
                 ...loggedInUser,
-                id: response.data.id,
-                username: response.data.username
+                id: response.data.data.id,
+                username: response.data.data.username,
+                email: response.data.data.email
             })
 
-            Cookies.set('user_id', response.data.id)
-            Cookies.set('user_username', response.data.username)
+            Cookies.set('user_id', response.data.data.id)
+            Cookies.set('user_username', response.data.data.username)
+            Cookies.set('user_email', response.data.data.email)
+
+            // Headers
+            Cookies.set('token-type',  response.headers['token-type'])
+            Cookies.set('access-token', response.headers['access-token'])
+            Cookies.set('client',  response.headers.client)
+            Cookies.set('uid',  response.headers.uid)
+            Cookies.set('authorization', response.headers.authorization)
 
             setUser({
                 ...user,
@@ -93,7 +99,7 @@ const Register = () => {
                         {/* Name */}
                         <div className='flex mb-8'>
                             <div className='bg-primary text-white py-2 px-3 flex flex-col justify-center'>
-                                <FaIdCard style={{ height: '12px' }} />
+                                <FaIdCardAlt style={{ height: '12px' }} />
                             </div>
                             <input
                                 type='text'
