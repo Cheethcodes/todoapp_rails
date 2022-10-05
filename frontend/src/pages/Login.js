@@ -26,23 +26,29 @@ const Login = () => {
 
         apiClient({
             method: 'post',
-            url: `/api/v1/login`,
+            url: `/auth/sign_in`,
             data: {
-                user:
-                {
-                    email: credentials.email,
-                    password: credentials.password
-                }
+                email: credentials.email,
+                password: credentials.password
             }
         }).then((response) => {
             setLoggedInUser({
                 ...loggedInUser,
-                id: response.data.id,
-                username: response.data.username
+                id: response.data.data.id,
+                username: response.data.data.username
             })
 
-            Cookies.set('user_id', response.data.id)
-            Cookies.set('user_username', response.data.username)
+            Cookies.set('user_id', response.data.data.id)
+            Cookies.set('user_username', response.data.data.username)
+            Cookies.set('user_email', response.data.data.email)
+
+            // Headers
+            Cookies.set('token-type',  response.headers['token-type'])
+            Cookies.set('access-token', response.headers['access-token'])
+            Cookies.set('client',  response.headers.client)
+            Cookies.set('uid',  response.headers.uid)
+            Cookies.set('authorization', response.headers.authorization)
+            
             login()
             navigate('/dashboard')
         }).catch(error => {

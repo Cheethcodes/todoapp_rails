@@ -5,7 +5,7 @@
 [![React][React.js]][React-url] [![Ruby on Rails][Rails.org]][Rails-url] [![Tailwind][Tailwind.com]][Tailwind-url] [![Mysql][Mysql.com]][Mysql-url]
 
 ### Project pre-requisites
-`Rails 6.1.7`
+`Rails 7.0.4`
 `Gem 3.2.33`
 `Ruby 3.0.4p208`
 `Yarn`
@@ -23,8 +23,7 @@ $ git pull
 ```sh 
 $ cd backend/
 $ bundler install
-$ yarn
-$ rails migrate:db
+$ rails db:migrate / rake db:migrate
 ```
 #### Frontend
 ```sh 

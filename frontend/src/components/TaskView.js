@@ -16,7 +16,7 @@ const TaskView = ({ tasks, setEditState, setEditId, setShowModal }) => {
             window.alert('Successfully deleted task!')
             setEditState(true)
         }).catch(error => {
-            console.log(error)
+            window.alert('There was an error processing your request!')
         })
     }
 
@@ -63,7 +63,6 @@ const TaskView = ({ tasks, setEditState, setEditId, setShowModal }) => {
                                     {task.description}
                                 </div>
                             </div>
-                            <br />
                         </React.Fragment>
                     )
                 })

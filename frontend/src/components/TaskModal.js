@@ -8,7 +8,7 @@ const TaskModal = ({ showModal, setShowModal, editId, setEditState }) => {
     const [task, setTask] = useState({
         name: '',
         description: '',
-        schedule: '',
+        schedule: moment().format(),
         checked: 0
     })
     const [timezone, setTimezone] = useState('')
@@ -21,11 +21,11 @@ const TaskModal = ({ showModal, setShowModal, editId, setEditState }) => {
 
         apiClient({
             method: 'get',
-            url: `/api/v1/tasks/${editId}/edit`
+            url: `/api/v1/tasks/${editId}`
         }).then(response => {
             setTask(response.data)
         }).catch(error => {
-            console.log(error.response)
+            window.alert('There was an error processing your request!')
         })
     }, [editId])
 
@@ -72,7 +72,7 @@ const TaskModal = ({ showModal, setShowModal, editId, setEditState }) => {
             setEditState(true)
             setShowModal(false)
         }).catch(error => {
-            console.log(error.response)
+            window.alert('There was an error processing your request!')
         })
     }
 
@@ -94,7 +94,7 @@ const TaskModal = ({ showModal, setShowModal, editId, setEditState }) => {
                                 <input
                                     type='text'
                                     id='name'
-                                className='w-full py-2 px-5 outline-0 border border-slate-200'
+                                    className='w-full py-2 px-5 outline-0 border border-slate-200'
                                     onChange={handleOnChange}
                                     value={task.name} />
                             </div>
@@ -103,7 +103,7 @@ const TaskModal = ({ showModal, setShowModal, editId, setEditState }) => {
                                 <input
                                     type='text'
                                     id='description'
-                                className='w-full py-2 px-5 outline-0 border border-slate-200'
+                                    className='w-full py-2 px-5 outline-0 border border-slate-200'
                                     onChange={handleOnChange}
                                     value={task.description} />
                             </div>
@@ -112,7 +112,7 @@ const TaskModal = ({ showModal, setShowModal, editId, setEditState }) => {
                                 <input
                                     type='datetime-local'
                                     id='schedule'
-                                className='w-full py-2 px-5 outline-0 border border-slate-200'
+                                    className='w-full py-2 px-5 outline-0 border border-slate-200'
                                     onChange={handleOnChange}
                                     value={
                                         moment(

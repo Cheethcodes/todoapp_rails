@@ -10,8 +10,9 @@ export const AuthProvider = ({ children }) => {
     const navigate = useNavigate()
     const [loggedIn, setLoggedIn] = useCustomReducer(SessionReducer, sessionStorage.getItem('loggedIn') === 'true' || false)
     const [loggedInUser, setLoggedInUser] = useState({
-        id: Cookies.get('user_id') || null,
-        username: Cookies.get('user_username') || null,
+        id: Cookies.get('user_id') ? Cookies.get('user_id') : '',
+        username: Cookies.get('user_username') ? Cookies.get('user_username') : '',
+        email: Cookies.get('user_email') ? Cookies.get('user_email') : '',
     })
 
     const login = async () => {
@@ -39,7 +40,7 @@ export const AuthProvider = ({ children }) => {
         loggedInUser,
         setLoggedInUser,
         logout,
-    }), [loggedIn])
+    }), [loggedIn, loggedInUser])
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
