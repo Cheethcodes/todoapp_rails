@@ -1,4 +1,5 @@
 # TO DO LIST
+A to do list app sample created using Ruby on Rails with simple React SPA.
 
 ### Made with
 
